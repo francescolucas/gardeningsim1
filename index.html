@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gardening Grid Simulation (Refactored)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="section-container" id="top-bar">
+        <div id="top-bar-content">
+            <div id="title-area">
+                <h1>Gardening Grid Simulation</h1>
+                <button id="instructions-button">Instructions</button>
+            </div>
+            <div id="sim-status-area">
+                 <span id="sim-time-display">Sim Time: 00:00</span>
+                 <span id="money-display">Money: $100</span>
+            </div>
+            <div id="sim-controls-area">
+                <div id="time-controls">
+                    <span>Speed:</span>
+                    <button id="speed-1x" data-speed="1" class="speed-button active-speed">1x</button>
+                    <button id="speed-2x" data-speed="2" class="speed-button">2x</button>
+                    <button id="speed-3x" data-speed="3" class="speed-button">3x</button>
+                    <button id="speed-4x" data-speed="4" class="speed-button">4x</button>
+                    <button id="pause-resume-button">Pause</button>
+                </div>
+                <div id="weather-controls">
+                     <label for="climate-select">Climate:</label>
+                     <select id="climate-select">
+                         <option value="Temperate">Temperate</option>
+                         <option value="Tropical">Tropical</option>
+                         <option value="Arid">Arid</option>
+                     </select>
+                     <span id="weather-display">Weather: Loading...</span>
+                 </div>
+            </div>
+            <div id="settings-area">
+                 <button id="reset-button">Reset Grid</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="section-container" id="main-content">
+        <div id="main-content-columns">
+            <div id="left-column">
+                <div id="action-controls-container">
+                     <div id="action-buttons">
+                         <span>Actions:</span>
+                         <button class="action-button active-action" data-action="water">Water</button>
+                         <button class="action-button" data-action="add_compost">Add Compost</button>
+                         <button class="action-button" data-action="add_crh">Add CRH</button>
+                         <button class="action-button" data-action="add_sand">Add Sand</button>
+                         <button class="action-button" data-action="till">Till</button>
+                         <button class="action-button" data-action="apply_neem">Apply Neem</button>
+                         <button class="action-button" data-action="harvest">Harvest</button>
+                         <button class="action-button" data-action="remove">Remove</button>
+                         <button class="action-button" data-action="shop">Shop Actions...</button>
+                     </div>
+                     <div id="place-buttons">
+                         <span>Place:</span>
+                         <button class="action-button" data-action="plant">Plant...</button>
+                         <button class="action-button" data-action="add_olla">Add Olla</button>
+                         <button class="action-button" data-action="add_trellis">Add Trellis</button>
+                         <button class="action-button" data-action="add_net">Add Net</button>
+                     </div>
+                     <div class="controls hidden" id="plant-type-control">
+                         <label for="plant-type">Plant Type:</label>
+                        <select id="plant-type">
+                            <option value="Test">Test (Black)</option>
+                            <option value="Corn">Corn (Yellow)</option>
+                            <option value="Beans">Beans (Green)</option>
+                            <option value="Squash">Squash (Orange)</option>
+                            <option value="Tomato">Tomato (Red)</option>
+                            <option value="Basil">Basil (Dk Green)</option>
+                            <option value="Flower">Flower (Pink)</option>
+                            <option value="Marigold">Marigold (Org/Ylw)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="garden-area">
+                     <div id="day-night-overlay"></div>
+                    <h2 class="area-label visually-hidden">Garden Grid</h2>
+                    <div id="garden-average-info">Avg Soil Cond: --</div>
+                    <div id="grid-container">
+                        </div>
+                </div>
+            </div>
+            <div id="right-column">
+                 <h2 class="area-label visually-hidden">Information Panels</h2>
+                 <div class="info-panel" id="plants-info-panel">
+                    <h3>Plants</h3>
+                    <table class="info-table" id="plant-info-table">
+                        <thead> <tr><th>Vis</th><th>Name</th><th>Description</th><th>Effects</th></tr> </thead>
+                        <tbody></tbody>
+                    </table>
+                 </div>
+                 <div class="info-panel" id="structures-info-panel">
+                    <h3>Structures</h3>
+                    <table class="info-table" id="structure-info-table">
+                        <thead> <tr><th>Vis</th><th>Name</th><th>Description</th><th>Effects</th></tr> </thead>
+                        <tbody></tbody>
+                    </table>
+                 </div>
+                 <div class="info-panel" id="pests-info-panel">
+                    <h3>Pests & Issues</h3>
+                    <table class="info-table" id="pest-info-table">
+                        <thead> <tr><th>Vis</th><th>Name</th><th>Effects</th><th>Counters</th></tr> </thead>
+                        <tbody></tbody>
+                    </table>
+                 </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="section-container" id="bottom-bar">
+        <div id="bottom-bar-content">
+            <div id="harvest-stats-area">
+                 <div id="harvest-summary">
+                      <h3>Harvest Summary</h3>
+                     <table id="harvest-table" class="info-table">
+                         <thead> <tr><th>Plant Type</th><th>Yield Harvested</th><th>Price/Unit</th><th>Total Value</th></tr> </thead>
+                         <tbody>
+                             <tr> <td>Corn</td> <td id="harvest-yield-Corn">0</td> <td id="harvest-ppu-Corn">0</td> <td id="harvest-valTot-Corn">$0</td> </tr>
+                             <tr> <td>Beans</td> <td id="harvest-yield-Beans">0</td> <td id="harvest-ppu-Beans">0</td> <td id="harvest-valTot-Beans">$0</td> </tr>
+                             <tr> <td>Squash</td> <td id="harvest-yield-Squash">0</td> <td id="harvest-ppu-Squash">0</td> <td id="harvest-valTot-Squash">$0</td> </tr>
+                             <tr> <td>Tomato</td> <td id="harvest-yield-Tomato">0</td> <td id="harvest-ppu-Tomato">0</td> <td id="harvest-valTot-Tomato">$0</td> </tr>
+                             <tr> <td>Basil</td> <td id="harvest-yield-Basil">0</td> <td id="harvest-ppu-Basil">0</td> <td id="harvest-valTot-Basil">$0</td> </tr>
+                             <tr> <td>Flower</td> <td id="harvest-yield-Flower">0</td> <td id="harvest-ppu-Flower">0</td> <td id="harvest-valTot-Flower">$0</td> </tr>
+                             <tr> <td>Marigold</td> <td id="harvest-yield-Marigold">0</td> <td id="harvest-ppu-Marigold">0</td> <td id="harvest-valTot-Marigold">$0</td> </tr>
+                             <tr> <td>Test</td> <td id="harvest-yield-Test">0</td> <td id="harvest-ppu-Test">0</td> <td id="harvest-valTot-Test">$0</td> </tr>
+                         </tbody>
+                         <tfoot> <tr> <td colspan="3">Total Harvest Value:</td> <td id="harvest-total-val">$0</td> </tr> </tfoot>
+                     </table>
+                     <button id="mass-harvest-button">Mass Harvest All</button>
+                 </div>
+                 <div id="player-stats">
+                     <h3>Player Stats</h3>
+                     <p>Current Time: <span id="current-time">Loading...</span></p>
+                 </div>
+            </div>
+             <div id="shop-area">
+                 <h3>Shop</h3>
+                 <div class="controls hidden" id="shop-controls">
+                     <span>Shop Actions:</span>
+                     <button id="buy-soil-conditioner" data-cost="10000">Use Soil Cond. ($10000)</button>
+                     <button id="buy-mass-neem" data-cost="2000">Mass Neem ($2000)</button>
+                     <button id="buy-mass-weed" data-cost="5000">Mass Weed ($5000)</button>
+                     <p>(Use 'Shop Actions' mode then click square for Soil Conditioner)</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="hover-info-box"></div>
+    <div id="bee-visual"></div>
+    <div id="lightbox-overlay">
+         <div id="instructions-lightbox">
+             <button class="close-button" id="close-lightbox-button">&times;</button>
+             <h2>Instructions & Basic Mechanics</h2>
+             <p>Welcome to the Garden Simulator!</p>
+             <ul>
+                 <li><b>Objective:</b> Grow plants, manage soil, deal with weather and pests, and harvest for value ($).</li>
+                 <li><b>Actions:</b> Use the 'Actions'/'Place' buttons to select what you want to do when clicking a square.</li>
+                 <li><b>Planting:</b> Select 'Plant' mode and choose a plant type. Click an empty square (no Olla). Plants need good soil, water, nutrients (BN), and energy (CHO).</li>
+                 <li><b>Watering:</b> Adds moisture. Too much harms roots/attracts Nematodes. Cools square. Refills Ollas.</li>
+                 <li><b>Tilling:</b> Reduces compaction, harms microbes, removes weeds & addons (Trellis/Net).</li>
+                 <li><b>Amendments:</b> Compost adds OM/Microbes/Moisture. CRH reduces moisture/compaction, adds OM, raises pH. Sand reduces moisture. High OM acidifies soil.</li>
+                 <li><b>Structures:</b> Place Ollas (exclusive), Trellises, or Nets using action buttons. Ollas water nearby. Trellises boost yield/nutrient use for some plants. Nets mitigate heat and deter Aphids. Combine adjacent Trellises/Nets for potential plant spreading!</li>
+                 <li><b>Nutrients (BN):</b> Plants consume BN. Microbes convert OM to BN (needs good conditions). Weeds sap BN.</li>
+                 <li><b>Energy (CHO):</b> Produced when growing well. Needed for growth & root recovery. Aphids sap CHO. Starts at 5.</li>
+                 <li><b>Roots:</b> Density (grows over time) affects uptake. Health decreases in bad conditions, reducing BN uptake. Recovery costs CHO.</li>
+                 <li><b>Weather:</b> Varies by Climate. Temp follows daily cycle + random flux, affects many processes. Humidity affects evap. Wind affects humidity & pollination.</li>
+                 <li><b>Pests & Weeds:</b> Pests (Aphids, Nematodes) & Weeds appear and grow. Check Info tables. Till weeds, Neem Aphids. Marigolds deter Nematodes. Ladybeetles reduce Aphids.</li>
+                 <li><b>Pollination & Yield:</b> Wind or Bees set `wasPollinated` flag. Mature (>=50%) & pollinated plants give yield. Pests reduce yield.</li>
+                 <li><b>Harvesting & Shop:</b> Harvest adds money based on yield & price. Use 'Shop Actions' mode then click square for Soil Conditioner. Mass Neem/Weed buttons apply globally.</li>
+                 <li><b>Day/Night:</b> The garden area will darken slightly at night.</li>
+             </ul>
+         </div>
+     </div>
+
+     <script type="module" src="main.js" defer></script>
+</body>
+</html>

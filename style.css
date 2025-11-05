@@ -1,0 +1,377 @@
+/* --- General Styles --- */
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; /* Let sections handle width */
+    margin: 0; /* Remove default margin */
+    background-color: #f4f4f4;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+h1 { font-size: 1.6em; }
+h2 { font-size: 1.3em; }
+h3 { font-size: 1.1em; }
+
+button, select {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.visually-hidden { /* Utility class to hide elements visually but keep for screen readers */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
+/* --- Section Layout --- */
+.section-container {
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center; /* Center the content div within the section */
+}
+#top-bar { background-color: #e9e9e9; border-bottom: 1px solid #ccc; }
+#main-content { background-color: #fff; /* White background for main area */ flex-grow: 1; /* Allow main content to take available vertical space */}
+#bottom-bar { background-color: #f0f0f0; border-top: 1px solid #ccc; }
+
+/* Content alignment within sections */
+#top-bar-content,
+#main-content-columns,
+#bottom-bar-content {
+    width: 100%;
+    max-width: 1300px; /* Max width for content */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center; /* Default alignment */
+}
+
+
+/* --- Section 1: Top Bar --- */
+#top-bar-content {
+    justify-content: space-between; /* Space out items */
+    align-items: center;
+}
+#title-area { text-align: center; flex-grow: 1; /* Allow title to take space */ }
+#title-area h1 { margin-bottom: 0; }
+#instructions-button {
+     margin-top: 5px;
+     padding: 4px 8px;
+     font-size: 11px;
+     border: 1px solid #aaa;
+     background-color: #eee;
+     border-radius: 4px;
+}
+#instructions-button:hover { background-color: #ddd; }
+
+#sim-status-area, #sim-controls-area, #settings-area {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#sim-controls-area { justify-content: center; } /* Center speed/weather controls if they wrap */
+#time-controls, #weather-controls { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
+
+
+/* --- Section 2: Main Content --- */
+#main-content-columns {
+    align-items: flex-start; /* Align columns to the top */
+}
+
+#left-column {
+    flex: 2; /* Take more space */
+    min-width: 400px; /* Adjust min width as needed */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+#action-controls-container {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column; /* Stack action/place groups */
+    gap: 10px;
+}
+#action-buttons, #place-buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+#action-buttons span, #place-buttons span { font-weight: bold; margin-right: 5px; }
+
+#garden-area {
+    flex-grow: 1; /* Allow garden to fill space in left column */
+    padding: 15px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    background-color: #ffffff; /* Grid area background */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    /* overflow: auto; /* Allow scrollbars if grid is very large */
+}
+#garden-average-info {
+     font-size: 0.9em; margin-bottom: 10px; padding: 5px 10px;
+     background-color: #eef; border-radius: 4px; text-align: center;
+     align-self: center;
+}
+
+#right-column {
+    flex: 1; /* Take less space */
+    min-width: 320px; /* Minimum width for info panels */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.info-panel {
+    padding: 15px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+
+
+/* --- Section 3: Bottom Bar --- */
+#bottom-bar-content {
+    justify-content: space-between;
+    align-items: flex-start;
+}
+#harvest-stats-area {
+    flex: 2;
+    display: flex;
+    flex-direction: column; /* Stack harvest and stats */
+    gap: 15px;
+}
+#shop-area {
+    flex: 1;
+    min-width: 250px; /* Min width for shop */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+}
+#shop-controls {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 8px;
+}
+#shop-controls p { font-size: 0.9em; color: #555; margin-top: 5px; }
+#harvest-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center harvest table/button */
+}
+
+
+/* --- General Control/Button Styles (from original) --- */
+.action-button {
+    padding: 5px 8px;
+    border: 1px solid #aaa;
+    background-color: #eee;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+.action-button:hover { background-color: #ddd; }
+.action-button.active-action { background-color: #bbf; border-color: #77a; font-weight: bold; }
+
+/* Plant type / shop selector hidden state */
+#plant-type-control.hidden, #shop-controls.hidden { display: none; }
+.controls.hidden { display: none; } /* General purpose hidden class */
+
+#time-controls button, #reset-button, #weather-controls select,
+#weather-controls span, #sim-time-display, #money-display,
+#mass-harvest-button, #shop-controls button, #instructions-button
+{
+     padding: 5px 10px;
+     border: 1px solid #aaa;
+     background-color: #eee;
+     border-radius: 4px;
+     font-size: 11px;
+     vertical-align: middle;
+     margin: 2px; /* Add small margin for wrapping */
+}
+#time-controls button:hover, #reset-button:hover, #weather-controls select:hover,
+#mass-harvest-button:hover, #shop-controls button:hover:not(:disabled),
+#instructions-button:hover
+{
+     background-color: #ddd;
+}
+#time-controls button.active-speed { background-color: #aae; border-color: #558; font-weight: bold; }
+#pause-resume-button { margin-left: 10px; }
+#weather-display, #sim-time-display, #money-display {
+     cursor: default;
+     background-color: #fff; /* White background */
+     border-color: #ccc;
+     white-space: pre;
+}
+#money-display { color: #383; font-weight: bold; }
+#mass-harvest-button { margin-top: 10px; background-color: #dff0d8; border-color: #b2dba1; font-weight: bold; }
+#mass-harvest-button:hover { background-color: #c8e6c9; }
+#shop-controls button:disabled { background-color: #f8f8f8; border-color: #ddd; color: #aaa; cursor: not-allowed; }
+#current-time { font-weight: bold; } /* Make current time stand out */
+
+
+/* --- Grid & Square Styles --- */
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(15, 40px); /* Default 15x15 */
+    grid-template-rows: repeat(15, 40px);
+    gap: 2px;
+    border: 2px solid #666;
+    padding: 3px;
+    background-color: #e0e0e0;
+    margin: 0 auto 10px auto; /* Center grid within garden area */
+    width: fit-content;
+    box-sizing: border-box;
+}
+
+.square {
+    width: 40px;
+    height: 40px;
+    background-color: #fdfdfd; border: 1px solid #ccc; cursor: pointer;
+    box-sizing: border-box; position: relative; overflow: hidden;
+}
+
+/* Pop Animation */
+.square.clicked { animation: pop 0.3s ease-out; }
+@keyframes pop { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+/* --- Square Internal Visuals (Copied from original <style>) --- */
+/* Layering */
+.moisture-visual { z-index: 0; }
+.soil-condition-overlay { z-index: 1; }
+.structure-trellis { z-index: 2; } /* Trellis below plant */
+.structure-net { z-index: 2; } /* Net below plant */
+.dot-element { z-index: 3; } /* Plant */
+.yield-display { z-index: 4; }
+.pest-indicator { z-index: 4; }
+.weed-dot { z-index: 5; }
+.structure-olla { z-index: 6; } /* Olla above weeds */
+#bee-visual { z-index: 10; }
+
+/* Base Visuals */
+.moisture-visual { position: absolute; top: 50%; left: 50%; width: 95%; height: 95%; background-color: rgb(210, 180, 140); transform: translate(-50%, -50%); pointer-events: none; transition: opacity 0.5s ease; }
+.soil-condition-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(144, 238, 144, 0); pointer-events: none; transition: background-color 0.5s ease; }
+.dot-element { border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; display: none; border: 1px solid rgba(255, 255, 255, 0.5); transition: width 0.3s ease, height 0.3s ease; display: flex; align-items: center; justify-content: center; }
+.yield-display { font-size: 8px; font-weight: bold; color: black; text-shadow: 0 0 1px white, 0 0 1px white; pointer-events: none; line-height: 1; display: none; }
+.weed-dot { position: absolute; width: 3px; height: 3px; background-color: #556B2F; border-radius: 50%; border: 1px solid black; pointer-events: none; display: none; }
+.weed-dot.corner-tl { top: 1px; left: 1px; } .weed-dot.corner-tr { top: 1px; right: 1px; } .weed-dot.corner-bl { bottom: 1px; left: 1px; } .weed-dot.corner-br { bottom: 1px; right: 1px; }
+.pest-indicator { position: absolute; width: 4px; height: 4px; border-radius: 30%; border: 1px solid black; display: none; pointer-events: none; background-color: #ADFF2F; }
+.pest-indicator.edge-t { top: 1px; left: 50%; transform: translateX(-50%); } .pest-indicator.edge-r { top: 50%; right: 1px; transform: translateY(-50%); } .pest-indicator.edge-b { bottom: 1px; left: 50%; transform: translateX(-50%); } .pest-indicator.edge-l { top: 50%; left: 1px; transform: translateY(-50%); }
+.pest-indicator.aphids { background-color: #9ACD32; } .pest-indicator.nematodes { background-color: #A0522D; }
+
+ /* Structure Visuals */
+.structure-olla {
+    position: absolute; top: 50%; left: 50%;
+    width: 50%; height: 50%;
+    border: 3px solid #A0522D; /* Terracotta border */
+    border-radius: 50%;      /* Circle */
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    background-color: #A0522D; /* Default: Empty/Brown */
+    /* display: none; JS handles display */
+    box-sizing: border-box;
+    transition: background-color 0.5s ease;
+}
+.structure-trellis {
+    position: absolute; top: 10%; left: 10%;
+    width: 80%; height: 80%;
+    border: 1px dashed #8B4513; /* Brown dashed border */
+    border-radius: 4px;
+    transform: none;
+    pointer-events: none;
+    display: none;
+    box-sizing: border-box;
+}
+ .structure-net {
+    position: absolute; top: 5%; left: 5%;
+    width: 90%; height: 90%;
+    border: 1px solid #eee; /* White border */
+    background-color: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
+    transform: none;
+    pointer-events: none;
+    display: none;
+    box-sizing: border-box;
+}
+
+/* Dot color classes */
+.dot-Test { background-color: black; } .dot-Corn { background-color: yellow; border-color: rgba(0,0,0,0.5); } .dot-Beans { background-color: green; } .dot-Squash { background-color: orange; }
+.dot-Tomato { background-color: red; } .dot-Basil { background-color: #006400; } .dot-Flower { background-color: #FFC0CB; } .dot-Marigold { background-color: #FFA500; }
+
+/* Bee Visual */
+ #bee-visual { position: absolute; width: 6px; height: 6px; background-color: black; border: 1px solid yellow; border-radius: 50%; pointer-events: none; transition: top 0.5s linear, left 0.5s linear; display: none; }
+
+
+/* --- Hover Box --- */
+#hover-info-box { position: absolute; display: none; background-color: #fff; border: 1px solid #aaa; border-radius: 4px; padding: 0; font-size: 11px; line-height: 1.3; pointer-events: none; z-index: 100; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); max-width: 250px; overflow: hidden; }
+.hover-section-1 { background-color: #e8e8e8; padding: 4px 8px; border-bottom: 1px solid #ccc; }
+.hover-section-2 { background-color: #ffffe0; padding: 6px 9px; }
+
+/* --- Info & Harvest Tables --- */
+.info-table-container { margin-top: 10px; width: 100%; /* Table containers take full width of parent */ display: flex; flex-direction: column; align-items: center; }
+.info-table { border-collapse: collapse; width: 100%; font-size: 11px; background-color: #fff; box-shadow: 1px 1px 3px rgba(0,0,0,0.1); margin-bottom: 10px; }
+.info-table th, .info-table td { border: 1px solid #ccc; padding: 3px 6px; text-align: left; vertical-align: top;}
+.info-table th { background-color: #eee; font-weight: bold; }
+.info-table .visual-cell { width: 25px; height: 25px; padding: 2px; vertical-align: middle; }
+.info-table .visual-sample { width: 100%; height: 100%; border: 1px solid #ddd; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.info-table .visual-sample .dot-element { display: block !important; position: static; transform: none; width: 60%; height: 60%; }
+.info-table .visual-sample .pest-indicator { display: block !important; position: static; transform: none; width: 4px; height: 4px; margin: 2px; }
+.info-table .visual-sample .structure-olla { display: block !important; position: static; transform: none; width: 50%; height: 50%; border-radius: 50%; border: 2px solid #A0522D; background-color: #ADD8E6;}
+.info-table .visual-sample .structure-trellis { display: block !important; position: static; transform: none; width: 80%; height: 80%; border: 1px dashed #8B4513; background:none; border-radius: 2px;}
+.info-table .visual-sample .structure-net { display: block !important; position: static; transform: none; width: 90%; height: 90%; border: 1px solid #eee; background-color: rgba(255, 255, 255, 0.15);}
+#harvest-table tfoot td { font-weight: bold; background-color: #f8f8f8; text-align: right;}
+ #harvest-table td:first-child, #harvest-table th:first-child { text-align: left;}
+ #harvest-table td:not(:first-child), #harvest-table th:not(:first-child) { text-align: right; }
+
+/* --- Instructions Lightbox --- */
+ #lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; display: none; justify-content: center; align-items: center; }
+ #instructions-lightbox { background-color: #fff; padding: 20px; border-radius: 8px; max-width: 600px; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+ #instructions-lightbox h2 { margin-top: 0; }
+ #instructions-lightbox .close-button { position: absolute; top: 10px; right: 10px; font-size: 1.5em; font-weight: bold; cursor: pointer; border: none; background: none; }
+ #lightbox-overlay.lightbox-visible { display: flex; }
+ 
+
+/* --- Addon Connection Visuals --- */
+.structure-trellis.connected-top { border-top-style: solid; border-top-width: 2px; }
+.structure-trellis.connected-right { border-right-style: solid; border-right-width: 2px; }
+.structure-trellis.connected-bottom { border-bottom-style: solid; border-bottom-width: 2px; }
+.structure-trellis.connected-left { border-left-style: solid; border-left-width: 2px; }
+
+.structure-net.connected-top { border-top-width: 2px; /* Make border thicker */ border-top-color: #ccc; }
+.structure-net.connected-right { border-right-width: 2px; border-right-color: #ccc; }
+.structure-net.connected-bottom { border-bottom-width: 2px; border-bottom-color: #ccc; }
+.structure-net.connected-left { border-left-width: 2px; border-left-color: #ccc; }
+
+/* --- Day/Night Overlay --- */
+#garden-area {
+    position: relative; /* Needed for overlay positioning context */
+    overflow: hidden; /* Prevent overlay bleed if dimensions slightly off */
+}
+
+#day-night-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 50, 0.5); /* Dark blueish, adjust color/alpha */
+    opacity: 0; /* Start fully transparent */
+    z-index: 5; /* Above grid items, below hover box/modals */
+    pointer-events: none; /* Allow clicks to pass through */
+    transition: opacity 0.75s linear; /* Smooth transition */
+}
